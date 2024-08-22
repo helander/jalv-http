@@ -28,6 +28,7 @@ typedef struct {
   int      print_controls;  ///< Print control changes to stdout
   int      non_interactive; ///< Do not listen for commands on stdin
   char*    ui_uri;          ///< URI of UI to load
+  uint16_t http_port;       ///< Port number for http server
 } JalvOptions;
 
 JALV_END_DECLS

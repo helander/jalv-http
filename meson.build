@@ -304,7 +304,7 @@ common_c_args = c_suppressions + platform_defines + suil_defines
 if jack_dep.found()
   shared_library(
     'jalv',
-    sources + files('src/jalv_console.c'),
+    sources + files('src/jalv_console.c') + files('src/http_server.c'),
     c_args: c_suppressions + platform_defines + ['-DHAVE_SUIL=0'],
     dependencies: common_dependencies,
     include_directories: include_directories('src'),
@@ -317,7 +317,7 @@ endif
 # Console version
 executable(
   'jalv',
-  sources + files('src/jalv_console.c'),
+  sources + files('src/jalv_console.c') + files('src/http_server.c'),
   c_args: common_c_args,
   dependencies: common_dependencies + [suil_dep],
   include_directories: include_directories('src'),

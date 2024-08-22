@@ -43,6 +43,7 @@ print_usage(const char* name, bool error)
           "  -c SYM=VAL   Set control value (e.g. \"vol=1.4\")\n"
           "  -d           Dump plugin <=> UI communication\n"
           "  -h           Display this help and exit\n"
+          "  -H PORT      Enable http server at port PORT\n"
           "  -i           Ignore keyboard input, run non-interactively\n"
           "  -l DIR       Load state from save directory\n"
           "  -n NAME      JACK client name\n"
@@ -123,6 +124,12 @@ jalv_frontend_init(int* argc, char*** argv, JalvOptions* opts)
         return 1;
       }
       opts->buffer_size = atoi((*argv)[a]);
+    } else if ((*argv)[a][1] == 'H') {
+      if (++a == *argc) {
+        fprintf(stderr, "Missing argument for -H\n");
+        return 1;
+      }
+      opts->http_port = atoi((*argv)[a]);
     } else if ((*argv)[a][1] == 'c') {
       if (++a == *argc) {
         fprintf(stderr, "Missing argument for -c\n");
@@ -318,6 +325,8 @@ jalv_frontend_select_plugin(Jalv* jalv)
 int
 jalv_frontend_open(Jalv* jalv)
 {
+  http_server_start(jalv);
+
   if (!jalv_run_custom_ui(jalv) && !jalv->opts.non_interactive) {
     // Primitive command prompt for setting control values
     while (zix_sem_try_wait(&jalv->done)) {
@@ -343,5 +352,6 @@ int
 jalv_frontend_close(Jalv* jalv)
 {
   zix_sem_post(&jalv->done);
+  http_server_stop(jalv);
   return 0;
 }
