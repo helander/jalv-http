@@ -175,7 +175,7 @@ void *http_server_run(void* inst)
                
               }
            } else {
-		 char buffer[5000];
+		 char buffer[50000];
                  buffer[0] = 0;
                  strcat(buffer,"HTTP/1.1 200 OK\r\nAccess-Control-Allow-Origin: *\r\n\r\n");
 
