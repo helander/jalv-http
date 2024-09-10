@@ -211,9 +211,9 @@ void *http_server_run(void* inst)
 			}
     			sprintf(record,"\"value\": %f,",port->control);strcat(buffer,record);
     			strcat(buffer,"\"points\": [");
-                        for(int i = 0; i < port->n_points; i=i+1) {
+                        for(int i = 0; i < control->n_points; i=i+1) {
                             strcat(buffer,"{");
-    			    sprintf(record,"\"value\": %f, \"label\": %s",port->points[i].value,port->points[i].label);strcat(buffer,record);
+    			    sprintf(record,"\"value\": %f, \"label\": %s",control->points[i].value,control->points[i].label);strcat(buffer,record);
                             strcat(buffer,"},");
                         }
     			strcat(buffer,"]");
