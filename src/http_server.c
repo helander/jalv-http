@@ -209,7 +209,14 @@ void *http_server_run(void* inst)
 			if (lilv_node_is_float(control->def) || lilv_node_is_int(control->def)) {
 	    			sprintf(record,"\"default\": %f,",lilv_node_as_float(control->def));strcat(buffer,record);
 			}
-    			sprintf(record,"\"value\": %f",port->control);strcat(buffer,record);
+    			sprintf(record,"\"value\": %f,",port->control);strcat(buffer,record);
+    			strcat(buffer,"\"points\": [");
+                        for(int i = 0; i < port->n_points; i=i+1) {
+                            strcat(buffer,"{");
+    			    sprintf(record,"\"value\": %f, \"label\": %s",port->points[i].value,port->points[i].label);strcat(buffer,record);
+                            strcat(buffer,"},");
+                        }
+    			strcat(buffer,"]");
 			strcat(buffer,"}");
   		}
 		strcat(buffer,"]");
