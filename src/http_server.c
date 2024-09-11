@@ -213,10 +213,10 @@ void *http_server_run(void* inst)
     			strcat(buffer,"\"points\": [");
                         for(int i = 0; i < control->n_points; i=i+1) {
                             strcat(buffer,"{");
-    			    sprintf(record,"\"value\": %f, \"label\": %s",control->points[i].value,control->points[i].label);strcat(buffer,record);
+    			    sprintf(record,"\"value\": %f, \"label\": \"%s\"",control->points[i].value,control->points[i].label);strcat(buffer,record);
                             strcat(buffer,"},");
                         }
-    			strcat(buffer,"]");
+    			strcat(buffer,"{}]");
 			strcat(buffer,"}");
   		}
 		strcat(buffer,"]");
